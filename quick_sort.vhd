@@ -39,13 +39,13 @@ architecture Behavioral of quick_sort is
 begin
   process (clk, rst)
     variable mem_v       : int_array(0 to ARRAY_SIZE - 1);
-    variable pivot_v   : integer range 0 to ARRAY_SIZE;
+    variable pivot_v     : integer range 0 to ARRAY_SIZE;
     variable pIndex_v    : integer range 0 to ARRAY_SIZE;
     variable arr_iter_v  : integer range 0 to ARRAY_SIZE;
     variable arr_end_v   : integer range 0 to ARRAY_SIZE;
     variable stack_v     : int_array(0 to 10 * ARRAY_SIZE - 1);
     variable stack_ptr_v : integer range 0 to 10 * ARRAY_SIZE;
-    variable state_v   : state_type;
+    variable state_v     : state_type;
     variable temp        : integer;
   begin
     if rst = '1' then
