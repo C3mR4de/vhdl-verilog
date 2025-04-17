@@ -39,14 +39,14 @@ architecture Behavioral of quick_sort is
 begin
   process (clk, rst)
     variable mem_v       : int_array(0 to ARRAY_SIZE - 1);
-  	variable pivot_v   : integer range 0 to ARRAY_SIZE;
-  	variable pIndex_v    : integer range 0 to ARRAY_SIZE;
-  	variable arr_iter_v  : integer range 0 to ARRAY_SIZE;
-  	variable arr_end_v   : integer range 0 to ARRAY_SIZE;
-  	variable stack_v     : int_array(0 to 10 * ARRAY_SIZE - 1);
-  	variable stack_ptr_v : integer range 0 to 10 * ARRAY_SIZE;
-  	variable state_v   : state_type;
-  	variable temp        : integer;
+    variable pivot_v   : integer range 0 to ARRAY_SIZE;
+    variable pIndex_v    : integer range 0 to ARRAY_SIZE;
+    variable arr_iter_v  : integer range 0 to ARRAY_SIZE;
+    variable arr_end_v   : integer range 0 to ARRAY_SIZE;
+    variable stack_v     : int_array(0 to 10 * ARRAY_SIZE - 1);
+    variable stack_ptr_v : integer range 0 to 10 * ARRAY_SIZE;
+    variable state_v   : state_type;
+    variable temp        : integer;
   begin
     if rst = '1' then
       state <= IDLE;
@@ -96,17 +96,17 @@ begin
               temp            := mem_v(arr_iter_v);
               mem_v(arr_iter_v) := mem_v(pIndex_v);
               mem_v(pIndex_v)   := temp;
-        pIndex_v       := pIndex_v + 1;
+              pIndex_v       := pIndex_v + 1;
             end if;
             arr_iter_v := arr_iter_v + 1;
           end if;
-      mem      <= mem_v;
-      pIndex   <= pIndex_v;
+          mem      <= mem_v;
+          pIndex   <= pIndex_v;
           arr_iter <= arr_iter_v;
-      state     <= state_v;
+          state    <= state_v;
 
         when PARTITION_END =>
-      mem_v          := mem;
+          mem_v          := mem;
           temp           := mem_v(pIndex);
           mem_v(pIndex)  := mem_v(arr_end);
           mem_v(arr_end) := temp;
@@ -115,21 +115,21 @@ begin
           state          <= SORT_END;
 
         when SORT_END =>
-      stack_v     := stack;
-      stack_ptr_v := stack_ptr;
-      if pivot - 1 > arr_begin then
-        stack_v(stack_ptr_v)     := arr_begin;
-        stack_v(stack_ptr_v + 1) := pivot - 1;
-        stack_ptr_v              := stack_ptr_v + 2;
-      end if;
-      if pivot + 1 < arr_end then
-        stack_v(stack_ptr_v)     := pivot + 1;
-        stack_v(stack_ptr_v + 1) := arr_end;
-        stack_ptr_v              := stack_ptr_v + 2;
-      end if;
-      stack   <= stack_v;
-      stack_ptr <= stack_ptr_v;
-      state     <= SORT_BEGIN;
+          stack_v     := stack;
+          stack_ptr_v := stack_ptr;
+          if pivot - 1 > arr_begin then
+            stack_v(stack_ptr_v)     := arr_begin;
+            stack_v(stack_ptr_v + 1) := pivot - 1;
+            stack_ptr_v              := stack_ptr_v + 2;
+          end if;
+          if pivot + 1 < arr_end then
+            stack_v(stack_ptr_v)     := pivot + 1;
+            stack_v(stack_ptr_v + 1) := arr_end;
+            stack_ptr_v              := stack_ptr_v + 2;
+          end if;
+          stack     <= stack_v;
+          stack_ptr <= stack_ptr_v;
+          state     <= SORT_BEGIN;
 
         when FINISH =>
           done <= '1';
